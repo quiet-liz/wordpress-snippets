@@ -1,0 +1,23 @@
+// Remove Website from WP Comments
+// Base code is from Gav’s Blog
+// Modifications were made to support Bootstrap 5
+function gb_comment_form_tweaks ($fields) {
+    //add placeholders and remove labels
+    $fields['author'] = '<input class="form-control mb-2" id="author" name="author" value="" placeholder="Name*" size="30" maxlength="245" required="required" type="text">';
+
+    $fields['email'] = '<input class="form-control mb-2" id="email" name="email" type="email" value="" placeholder="Email*" size="30" maxlength="100" aria-describedby="email-notes" required="required">';	
+
+    $fields['cookies'] = '<p class="comment-form-cookies-consent"><input class="form-check-input me-2" id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value=""><label for="wp-comment-cookies-consent">Save details for future comments?</label></p>';
+
+    //unset comment so we can recreate it at the bottom
+    unset($fields['comment']);
+
+    $fields['comment'] = '<textarea class="form-control mb-2" id="comment" name="comment" cols="45" rows="8" maxlength="65525" placeholder="Comment*" required="required"></textarea>';
+
+    //remove website
+    unset($fields['url']);
+
+    return $fields;
+}
+
+add_filter('comment_form_fields', 'gb_comment_form_tweaks');
